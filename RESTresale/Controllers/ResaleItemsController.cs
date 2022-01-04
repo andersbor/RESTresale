@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using RESTresale.Managers;
+using RESTresale.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,11 +14,20 @@ namespace RESTresale.Controllers
     [ApiController]
     public class ResaleItemsController : ControllerBase
     {
+        private readonly ResaleItemsManagerDB _manager;
+
+        public ResaleItemsController(SalesItemContext context)
+        {
+            _manager = new ResaleItemsManagerDB(context);
+        }
+        // a lot of REST methods
+
+
         // GET: api/<ResaleItemsController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<ResaleItem> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _manager.GetAll();
         }
 
         // GET api/<ResaleItemsController>/5

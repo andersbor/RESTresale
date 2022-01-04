@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RESTresale.Models;
 
 namespace RESTresale.Managers
 {
@@ -7,6 +8,6 @@ namespace RESTresale.Managers
         public SalesItemContext
             (DbContextOptions<SalesItemContext> options) : base(options) { }
 
-        public DbSet<SalesItemContext> SalesItems { get; set; }
+        public DbSet<ResaleItem> ResaleItems { get; set; }
     }
 }
