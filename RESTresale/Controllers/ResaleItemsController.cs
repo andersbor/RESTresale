@@ -32,15 +32,16 @@ namespace RESTresale.Controllers
 
         // GET api/<ResaleItemsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public ResaleItem Get(int id)
         {
-            return "value";
+            return _manager.GetById(id);
         }
 
         // POST api/<ResaleItemsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] ResaleItem value)
         {
+            _manager.Add(value);
         }
 
         // PUT api/<ResaleItemsController>/5
