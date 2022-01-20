@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using RESTresale.Managers;
 using RESTresale.Models;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using Microsoft.AspNetCore.Http;
 
 namespace RESTresale.Controllers
 {
@@ -25,23 +21,31 @@ namespace RESTresale.Controllers
 
         // GET: api/<ResaleItemsController>
         [HttpGet]
-        public IEnumerable<ResaleItem> Get()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<IEnumerable<ResaleItem>> Get()
         {
-            return _manager.GetAll();
+            return Ok(_manager.GetAll());
         }
 
         // GET api/<ResaleItemsController>/5
         [HttpGet("{id}")]
-        public ResaleItem Get(int id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<ResaleItem> Get(int id)
         {
-            return _manager.GetById(id);
+            ResaleItem item = _manager.GetById(id);
+            if (item == null) return NotFound("No such item, id: " + id);
+            return Ok(item);
         }
 
         // POST api/<ResaleItemsController>
         [HttpPost]
-        public void Post([FromBody] ResaleItem value)
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public ActionResult<ResaleItem> Post([FromBody] ResaleItem value)
         {
-            _manager.Add(value);
+            ResaleItem item = _manager.Add(value);
+            string uri = Url.RouteUrl(RouteData.Values) + "/" + item.Id;
+            return Created(uri, item);
         }
 
         // PUT api/<ResaleItemsController>/5

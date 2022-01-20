@@ -23,13 +23,11 @@ namespace RESTresale.Managers
             return _context.ResaleItems.Find(id);
         }
 
-        public int Add(ResaleItem item)
+        public ResaleItem Add(ResaleItem item)
         {
             _context.Add(item);
             _context.SaveChanges(); // don't forget to save
-            int newId = item.Id;
-            // car.Id us updated by the database: id int identity(1,1)
-            return newId;
+            return item;
         }
 
     }
