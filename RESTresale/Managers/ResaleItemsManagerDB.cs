@@ -25,6 +25,7 @@ namespace RESTresale.Managers
 
         public ResaleItem Add(ResaleItem item)
         {
+            item.Id = null;
             _context.Add(item);
             _context.SaveChanges(); // don't forget to save
             return item;
