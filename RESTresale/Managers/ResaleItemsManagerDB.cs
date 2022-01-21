@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using RESTresale.Models;
 
@@ -15,7 +16,7 @@ namespace RESTresale.Managers
 
         public List<ResaleItem> GetAll()
         {
-            return _context.ResaleItems.ToList();
+            return _context.ResaleItems.OrderByDescending(x => x.Id).ToList();
         }
 
         public ResaleItem GetById(int id)
@@ -26,10 +27,17 @@ namespace RESTresale.Managers
         public ResaleItem Add(ResaleItem item)
         {
             item.Id = null;
-            _context.Add(item);
+            _context.ResaleItems.Add(item);
             _context.SaveChanges(); // don't forget to save
             return item;
         }
 
+        internal void Delete(int id)
+        {
+            ResaleItem item = new ResaleItem() { Id = id };
+            _context.ResaleItems.Attach(item);
+            _context.ResaleItems.Remove(item);
+            _context.SaveChanges();
+        }
     }
 }

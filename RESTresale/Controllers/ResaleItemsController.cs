@@ -49,15 +49,17 @@ namespace RESTresale.Controllers
         }
 
         // PUT api/<ResaleItemsController>/5
-        [HttpPut("{id}")]
+        /*[HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
-        }
+        }*/
 
         // DELETE api/<ResaleItemsController>/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public void Delete(int id)
         {
+            _manager.Delete(id);
         }
     }
 }
